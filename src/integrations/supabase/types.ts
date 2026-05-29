@@ -14,16 +14,305 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          metadata: Json
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      emails: {
+        Row: {
+          created_at: string
+          from_address: string | null
+          id: string
+          job_id: string | null
+          parsed_status: Database["public"]["Enums"]["job_status"] | null
+          received_at: string
+          snippet: string | null
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          from_address?: string | null
+          id?: string
+          job_id?: string | null
+          parsed_status?: Database["public"]["Enums"]["job_status"] | null
+          received_at?: string
+          snippet?: string | null
+          subject: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          from_address?: string | null
+          id?: string
+          job_id?: string | null
+          parsed_status?: Database["public"]["Enums"]["job_status"] | null
+          received_at?: string
+          snippet?: string | null
+          subject?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emails_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feature_flags: {
+        Row: {
+          enabled: boolean
+          key: string
+          updated_at: string
+        }
+        Insert: {
+          enabled?: boolean
+          key: string
+          updated_at?: string
+        }
+        Update: {
+          enabled?: boolean
+          key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gmail_tokens: {
+        Row: {
+          access_token: string | null
+          connected_at: string
+          expiry: string | null
+          last_synced_at: string | null
+          refresh_token: string | null
+          user_id: string
+        }
+        Insert: {
+          access_token?: string | null
+          connected_at?: string
+          expiry?: string | null
+          last_synced_at?: string | null
+          refresh_token?: string | null
+          user_id: string
+        }
+        Update: {
+          access_token?: string | null
+          connected_at?: string
+          expiry?: string | null
+          last_synced_at?: string | null
+          refresh_token?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      interview_sessions: {
+        Row: {
+          answers: Json
+          company_summary: string | null
+          created_at: string
+          feedback: Json
+          id: string
+          job_id: string
+          questions: Json
+          user_id: string
+        }
+        Insert: {
+          answers?: Json
+          company_summary?: string | null
+          created_at?: string
+          feedback?: Json
+          id?: string
+          job_id: string
+          questions?: Json
+          user_id: string
+        }
+        Update: {
+          answers?: Json
+          company_summary?: string | null
+          created_at?: string
+          feedback?: Json
+          id?: string
+          job_id?: string
+          questions?: Json
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interview_sessions_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          applied_date: string
+          company: string
+          created_at: string
+          id: string
+          last_activity: string
+          location: string | null
+          notes: string | null
+          portal: string | null
+          resume_id: string | null
+          source: Database["public"]["Enums"]["job_source"]
+          status: Database["public"]["Enums"]["job_status"]
+          title: string
+          user_id: string
+        }
+        Insert: {
+          applied_date?: string
+          company: string
+          created_at?: string
+          id?: string
+          last_activity?: string
+          location?: string | null
+          notes?: string | null
+          portal?: string | null
+          resume_id?: string | null
+          source?: Database["public"]["Enums"]["job_source"]
+          status?: Database["public"]["Enums"]["job_status"]
+          title: string
+          user_id: string
+        }
+        Update: {
+          applied_date?: string
+          company?: string
+          created_at?: string
+          id?: string
+          last_activity?: string
+          location?: string | null
+          notes?: string | null
+          portal?: string | null
+          resume_id?: string | null
+          source?: Database["public"]["Enums"]["job_source"]
+          status?: Database["public"]["Enums"]["job_status"]
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_resume_fk"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          name?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+        }
+        Relationships: []
+      }
+      resumes: {
+        Row: {
+          ai_feedback: Json | null
+          ai_score: number | null
+          file_path: string
+          id: string
+          label: string
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_feedback?: Json | null
+          ai_score?: number | null
+          file_path: string
+          id?: string
+          label: string
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_feedback?: Json | null
+          ai_score?: number | null
+          file_path?: string
+          id?: string
+          label?: string
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      job_source: "manual" | "gmail"
+      job_status: "applied" | "in_review" | "interview" | "offer" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +439,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      job_source: ["manual", "gmail"],
+      job_status: ["applied", "in_review", "interview", "offer", "rejected"],
+    },
   },
 } as const
