@@ -97,14 +97,14 @@ Grade 0-10. Give one sentence of strengths and one sentence of improvements.`,
     });
     const feedback = experimental_output as { score: number; strengths: string; improvements: string };
 
-    const answers = (session.answers as unknown[]) ?? [];
-    const fbArr = (session.feedback as unknown[]) ?? [];
+    const answers = ((session.answers as unknown as string[]) ?? []).slice();
+    const fbArr = ((session.feedback as unknown as Array<{ score: number; strengths: string; improvements: string }>) ?? []).slice();
     answers[data.question_index] = data.answer;
     fbArr[data.question_index] = feedback;
 
     const { data: row, error } = await context.supabase
       .from("interview_sessions")
-      .update({ answers, feedback: fbArr })
+      .update({ answers: answers as never, feedback: fbArr as never })
       .eq("id", data.session_id).select().single();
     if (error) throw new Error(error.message);
     return { feedback, session: row };
