@@ -7,7 +7,7 @@ import { listSessions } from "@/lib/interview.functions";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const Route = createFileRoute("/_authenticated/dashboard/interview")({
+export const Route = createFileRoute("/_authenticated/dashboard/interview/")({
   head: () => ({ meta: [{ title: "AI Interview Prep — ApplyTrack" }] }),
   component: InterviewListPage,
 });

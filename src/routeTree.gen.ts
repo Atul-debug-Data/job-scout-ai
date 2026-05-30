@@ -20,12 +20,12 @@ import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
 import { Route as AuthenticatedDashboardResumesRouteImport } from './routes/_authenticated/dashboard.resumes'
-import { Route as AuthenticatedDashboardInterviewRouteImport } from './routes/_authenticated/dashboard.interview'
 import { Route as AuthenticatedDashboardGmailRouteImport } from './routes/_authenticated/dashboard.gmail'
 import { Route as AuthenticatedDashboardApplicationsRouteImport } from './routes/_authenticated/dashboard.applications'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authenticated/admin.logs'
 import { Route as AuthenticatedAdminFlagsRouteImport } from './routes/_authenticated/admin.flags'
+import { Route as AuthenticatedDashboardInterviewIndexRouteImport } from './routes/_authenticated/dashboard.interview.index'
 import { Route as AuthenticatedDashboardInterviewJobIdRouteImport } from './routes/_authenticated/dashboard.interview.$jobId'
 
 const SignupRoute = SignupRouteImport.update({
@@ -85,12 +85,6 @@ const AuthenticatedDashboardResumesRoute =
     path: '/dashboard/resumes',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedDashboardInterviewRoute =
-  AuthenticatedDashboardInterviewRouteImport.update({
-    id: '/dashboard/interview',
-    path: '/dashboard/interview',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedDashboardGmailRoute =
   AuthenticatedDashboardGmailRouteImport.update({
     id: '/dashboard/gmail',
@@ -118,11 +112,17 @@ const AuthenticatedAdminFlagsRoute = AuthenticatedAdminFlagsRouteImport.update({
   path: '/flags',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedDashboardInterviewIndexRoute =
+  AuthenticatedDashboardInterviewIndexRouteImport.update({
+    id: '/dashboard/interview/',
+    path: '/dashboard/interview/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedDashboardInterviewJobIdRoute =
   AuthenticatedDashboardInterviewJobIdRouteImport.update({
-    id: '/$jobId',
-    path: '/$jobId',
-    getParentRoute: () => AuthenticatedDashboardInterviewRoute,
+    id: '/dashboard/interview/$jobId',
+    path: '/dashboard/interview/$jobId',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -137,12 +137,12 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
-  '/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
+  '/dashboard/interview/': typeof AuthenticatedDashboardInterviewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -155,12 +155,12 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
-  '/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
+  '/dashboard/interview': typeof AuthenticatedDashboardInterviewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -176,12 +176,12 @@ export interface FileRoutesById {
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/_authenticated/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
-  '/_authenticated/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
   '/_authenticated/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
+  '/_authenticated/dashboard/interview/': typeof AuthenticatedDashboardInterviewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -197,12 +197,12 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/dashboard/applications'
     | '/dashboard/gmail'
-    | '/dashboard/interview'
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin/'
     | '/dashboard/'
     | '/dashboard/interview/$jobId'
+    | '/dashboard/interview/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -215,12 +215,12 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/dashboard/applications'
     | '/dashboard/gmail'
-    | '/dashboard/interview'
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin'
     | '/dashboard'
     | '/dashboard/interview/$jobId'
+    | '/dashboard/interview'
   id:
     | '__root__'
     | '/'
@@ -235,12 +235,12 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/users'
     | '/_authenticated/dashboard/applications'
     | '/_authenticated/dashboard/gmail'
-    | '/_authenticated/dashboard/interview'
     | '/_authenticated/dashboard/resumes'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/admin/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/interview/$jobId'
+    | '/_authenticated/dashboard/interview/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -331,13 +331,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardResumesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/dashboard/interview': {
-      id: '/_authenticated/dashboard/interview'
-      path: '/dashboard/interview'
-      fullPath: '/dashboard/interview'
-      preLoaderRoute: typeof AuthenticatedDashboardInterviewRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/dashboard/gmail': {
       id: '/_authenticated/dashboard/gmail'
       path: '/dashboard/gmail'
@@ -373,12 +366,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminFlagsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/dashboard/interview/': {
+      id: '/_authenticated/dashboard/interview/'
+      path: '/dashboard/interview'
+      fullPath: '/dashboard/interview/'
+      preLoaderRoute: typeof AuthenticatedDashboardInterviewIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard/interview/$jobId': {
       id: '/_authenticated/dashboard/interview/$jobId'
-      path: '/$jobId'
+      path: '/dashboard/interview/$jobId'
       fullPath: '/dashboard/interview/$jobId'
       preLoaderRoute: typeof AuthenticatedDashboardInterviewJobIdRouteImport
-      parentRoute: typeof AuthenticatedDashboardInterviewRoute
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
@@ -400,29 +400,15 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
 const AuthenticatedAdminRouteWithChildren =
   AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
-interface AuthenticatedDashboardInterviewRouteChildren {
-  AuthenticatedDashboardInterviewJobIdRoute: typeof AuthenticatedDashboardInterviewJobIdRoute
-}
-
-const AuthenticatedDashboardInterviewRouteChildren: AuthenticatedDashboardInterviewRouteChildren =
-  {
-    AuthenticatedDashboardInterviewJobIdRoute:
-      AuthenticatedDashboardInterviewJobIdRoute,
-  }
-
-const AuthenticatedDashboardInterviewRouteWithChildren =
-  AuthenticatedDashboardInterviewRoute._addFileChildren(
-    AuthenticatedDashboardInterviewRouteChildren,
-  )
-
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedDashboardApplicationsRoute: typeof AuthenticatedDashboardApplicationsRoute
   AuthenticatedDashboardGmailRoute: typeof AuthenticatedDashboardGmailRoute
-  AuthenticatedDashboardInterviewRoute: typeof AuthenticatedDashboardInterviewRouteWithChildren
   AuthenticatedDashboardResumesRoute: typeof AuthenticatedDashboardResumesRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardInterviewJobIdRoute: typeof AuthenticatedDashboardInterviewJobIdRoute
+  AuthenticatedDashboardInterviewIndexRoute: typeof AuthenticatedDashboardInterviewIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -430,11 +416,13 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardApplicationsRoute:
     AuthenticatedDashboardApplicationsRoute,
   AuthenticatedDashboardGmailRoute: AuthenticatedDashboardGmailRoute,
-  AuthenticatedDashboardInterviewRoute:
-    AuthenticatedDashboardInterviewRouteWithChildren,
   AuthenticatedDashboardResumesRoute: AuthenticatedDashboardResumesRoute,
   AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedDashboardInterviewJobIdRoute:
+    AuthenticatedDashboardInterviewJobIdRoute,
+  AuthenticatedDashboardInterviewIndexRoute:
+    AuthenticatedDashboardInterviewIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
