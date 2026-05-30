@@ -15,8 +15,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
 import { Route as AuthenticatedDashboardResumesRouteImport } from './routes/_authenticated/dashboard.resumes'
@@ -57,16 +57,17 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -74,33 +75,33 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
 } as any)
 const AuthenticatedDashboardSettingsRoute =
   AuthenticatedDashboardSettingsRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    id: '/dashboard/settings',
+    path: '/dashboard/settings',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardResumesRoute =
   AuthenticatedDashboardResumesRouteImport.update({
-    id: '/resumes',
-    path: '/resumes',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    id: '/dashboard/resumes',
+    path: '/dashboard/resumes',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardInterviewRoute =
   AuthenticatedDashboardInterviewRouteImport.update({
-    id: '/interview',
-    path: '/interview',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    id: '/dashboard/interview',
+    path: '/dashboard/interview',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardGmailRoute =
   AuthenticatedDashboardGmailRouteImport.update({
-    id: '/gmail',
-    path: '/gmail',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    id: '/dashboard/gmail',
+    path: '/dashboard/gmail',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardApplicationsRoute =
   AuthenticatedDashboardApplicationsRouteImport.update({
-    id: '/applications',
-    path: '/applications',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    id: '/dashboard/applications',
+    path: '/dashboard/applications',
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
@@ -131,7 +132,6 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/admin/flags': typeof AuthenticatedAdminFlagsRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -141,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
 }
 export interface FileRoutesByTo {
@@ -149,7 +150,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
-  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/admin/flags': typeof AuthenticatedAdminFlagsRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -159,6 +159,7 @@ export interface FileRoutesByTo {
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
 }
 export interface FileRoutesById {
@@ -170,7 +171,6 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/_authenticated/admin/flags': typeof AuthenticatedAdminFlagsRoute
   '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
@@ -180,6 +180,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/interview/$jobId': typeof AuthenticatedDashboardInterviewJobIdRoute
 }
 export interface FileRouteTypes {
@@ -191,7 +192,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
-    | '/dashboard'
     | '/admin/flags'
     | '/admin/logs'
     | '/admin/users'
@@ -201,6 +201,7 @@ export interface FileRouteTypes {
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin/'
+    | '/dashboard/'
     | '/dashboard/interview/$jobId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -209,7 +210,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/reset-password'
     | '/signup'
-    | '/dashboard'
     | '/admin/flags'
     | '/admin/logs'
     | '/admin/users'
@@ -219,6 +219,7 @@ export interface FileRouteTypes {
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin'
+    | '/dashboard'
     | '/dashboard/interview/$jobId'
   id:
     | '__root__'
@@ -229,7 +230,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_authenticated/admin'
-    | '/_authenticated/dashboard'
     | '/_authenticated/admin/flags'
     | '/_authenticated/admin/logs'
     | '/_authenticated/admin/users'
@@ -239,6 +239,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/resumes'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/admin/'
+    | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/interview/$jobId'
   fileRoutesById: FileRoutesById
 }
@@ -295,18 +296,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/admin/': {
@@ -318,38 +319,38 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/dashboard/settings': {
       id: '/_authenticated/dashboard/settings'
-      path: '/settings'
+      path: '/dashboard/settings'
       fullPath: '/dashboard/settings'
       preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/resumes': {
       id: '/_authenticated/dashboard/resumes'
-      path: '/resumes'
+      path: '/dashboard/resumes'
       fullPath: '/dashboard/resumes'
       preLoaderRoute: typeof AuthenticatedDashboardResumesRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/interview': {
       id: '/_authenticated/dashboard/interview'
-      path: '/interview'
+      path: '/dashboard/interview'
       fullPath: '/dashboard/interview'
       preLoaderRoute: typeof AuthenticatedDashboardInterviewRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/gmail': {
       id: '/_authenticated/dashboard/gmail'
-      path: '/gmail'
+      path: '/dashboard/gmail'
       fullPath: '/dashboard/gmail'
       preLoaderRoute: typeof AuthenticatedDashboardGmailRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/applications': {
       id: '/_authenticated/dashboard/applications'
-      path: '/applications'
+      path: '/dashboard/applications'
       fullPath: '/dashboard/applications'
       preLoaderRoute: typeof AuthenticatedDashboardApplicationsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
@@ -414,38 +415,26 @@ const AuthenticatedDashboardInterviewRouteWithChildren =
     AuthenticatedDashboardInterviewRouteChildren,
   )
 
-interface AuthenticatedDashboardRouteChildren {
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedDashboardApplicationsRoute: typeof AuthenticatedDashboardApplicationsRoute
   AuthenticatedDashboardGmailRoute: typeof AuthenticatedDashboardGmailRoute
   AuthenticatedDashboardInterviewRoute: typeof AuthenticatedDashboardInterviewRouteWithChildren
   AuthenticatedDashboardResumesRoute: typeof AuthenticatedDashboardResumesRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
-}
-
-const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
-  {
-    AuthenticatedDashboardApplicationsRoute:
-      AuthenticatedDashboardApplicationsRoute,
-    AuthenticatedDashboardGmailRoute: AuthenticatedDashboardGmailRoute,
-    AuthenticatedDashboardInterviewRoute:
-      AuthenticatedDashboardInterviewRouteWithChildren,
-    AuthenticatedDashboardResumesRoute: AuthenticatedDashboardResumesRoute,
-    AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
-  }
-
-const AuthenticatedDashboardRouteWithChildren =
-  AuthenticatedDashboardRoute._addFileChildren(
-    AuthenticatedDashboardRouteChildren,
-  )
-
-interface AuthenticatedRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+  AuthenticatedDashboardApplicationsRoute:
+    AuthenticatedDashboardApplicationsRoute,
+  AuthenticatedDashboardGmailRoute: AuthenticatedDashboardGmailRoute,
+  AuthenticatedDashboardInterviewRoute:
+    AuthenticatedDashboardInterviewRouteWithChildren,
+  AuthenticatedDashboardResumesRoute: AuthenticatedDashboardResumesRoute,
+  AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -463,3 +452,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

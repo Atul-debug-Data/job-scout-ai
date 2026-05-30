@@ -6,7 +6,7 @@ import { Briefcase, Eye, Phone, CheckCircle2, XCircle } from "lucide-react";
 import { getDashboardStats } from "@/lib/jobs.functions";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const Route = createFileRoute("/_authenticated/dashboard")({
+export const Route = createFileRoute("/_authenticated/dashboard/")({
   head: () => ({ meta: [{ title: "Dashboard — ApplyTrack" }] }),
   component: DashboardPage,
 });
