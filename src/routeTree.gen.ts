@@ -23,6 +23,7 @@ import { Route as AuthenticatedDashboardResumesRouteImport } from './routes/_aut
 import { Route as AuthenticatedDashboardInterviewRouteImport } from './routes/_authenticated/dashboard.interview'
 import { Route as AuthenticatedDashboardGmailRouteImport } from './routes/_authenticated/dashboard.gmail'
 import { Route as AuthenticatedDashboardApplicationsRouteImport } from './routes/_authenticated/dashboard.applications'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedDashboardInterviewJobIdRouteImport } from './routes/_authenticated/dashboard.interview.$jobId'
 
 const SignupRoute = SignupRouteImport.update({
@@ -99,6 +100,11 @@ const AuthenticatedDashboardApplicationsRoute =
     path: '/applications',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedDashboardInterviewJobIdRoute =
   AuthenticatedDashboardInterviewJobIdRouteImport.update({
     id: '/$jobId',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
   '/_authenticated/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/_authenticated/dashboard/interview': typeof AuthenticatedDashboardInterviewRouteWithChildren
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/admin'
     | '/dashboard'
+    | '/admin/users'
     | '/dashboard/applications'
     | '/dashboard/gmail'
     | '/dashboard/interview'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/dashboard'
+    | '/admin/users'
     | '/dashboard/applications'
     | '/dashboard/gmail'
     | '/dashboard/interview'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
+    | '/_authenticated/admin/users'
     | '/_authenticated/dashboard/applications'
     | '/_authenticated/dashboard/gmail'
     | '/_authenticated/dashboard/interview'
@@ -315,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardApplicationsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/dashboard/interview/$jobId': {
       id: '/_authenticated/dashboard/interview/$jobId'
       path: '/$jobId'
@@ -326,10 +345,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
