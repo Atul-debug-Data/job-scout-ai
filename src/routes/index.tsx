@@ -18,72 +18,70 @@ export const Route = createFileRoute("/")({
 function Landing() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-30 backdrop-blur-md border-b border-border/40 bg-background/70">
-        <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
+      <header className="sticky top-0 z-30 bg-card border-b border-border shadow-card">
+        <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-14">
           <Link to="/" className="flex items-center gap-2">
-            <div className="size-8 rounded-lg gradient-primary shadow-glow" />
-            <span className="font-display text-xl font-semibold">ApplyTrack</span>
+            <div className="size-8 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">in</div>
+            <span className="font-semibold text-lg text-foreground">ApplyTrack</span>
           </Link>
           <nav className="flex items-center gap-2">
-            <Link to="/login"><Button variant="ghost">Log in</Button></Link>
-            <Link to="/signup"><Button>Sign up</Button></Link>
+            <Link to="/login"><Button variant="ghost" className="rounded-full font-semibold text-foreground">Sign in</Button></Link>
+            <Link to="/signup"><Button className="rounded-full font-semibold">Join now</Button></Link>
           </nav>
         </div>
       </header>
 
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-card border-b border-border">
         <div className="absolute inset-0 gradient-hero pointer-events-none" />
-        <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32 grid md:grid-cols-2 gap-12 items-center">
+        <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1 text-xs text-muted-foreground">
-              <Sparkles className="size-3 text-primary" /> AI-powered job search
-            </div>
-            <h1 className="mt-6 font-display text-5xl md:text-6xl font-semibold leading-[1.05] tracking-tight">
+            <h1 className="font-display text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-foreground">
               Track every job.<br />
-              <span className="text-gradient">Never miss a follow-up.</span>
+              <span className="text-primary">Never miss a follow-up.</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-md">
               ApplyTrack syncs with Gmail, organizes your pipeline, and uses AI to help you ace every interview.
             </p>
             <div className="mt-8 flex gap-3">
-              <Link to="/signup"><Button size="lg" className="shadow-glow">Get Started Free <ArrowRight className="size-4" /></Button></Link>
-              <Link to="/login"><Button size="lg" variant="outline">Log in</Button></Link>
+              <Link to="/signup"><Button size="lg" className="rounded-full font-semibold">Get started free <ArrowRight className="size-4" /></Button></Link>
+              <Link to="/login"><Button size="lg" variant="outline" className="rounded-full font-semibold border-primary text-primary hover:bg-secondary">Sign in</Button></Link>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="relative"
           >
-            <div className="rounded-2xl border border-border/60 bg-card/80 backdrop-blur p-5 shadow-card">
+            <div className="rounded-lg border border-border bg-card p-5 shadow-lift">
               <div className="flex items-center justify-between mb-4">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Recent applications</p>
-                <span className="text-xs text-primary">Live sync</span>
+                <p className="label-uppercase">Recent applications</p>
+                <span className="text-xs font-semibold text-primary">Live sync</span>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {[
-                  { c: "Stripe", t: "Senior Product Engineer", s: "Interview", color: "bg-primary/20 text-primary" },
-                  { c: "Linear", t: "Full-stack Engineer", s: "In review", color: "bg-warning/20 text-warning" },
-                  { c: "Vercel", t: "Developer Advocate", s: "Offer", color: "bg-success/20 text-success" },
+                  { c: "Stripe", t: "Senior Product Engineer", s: "Interview", color: "bg-[#F0EAFF] text-[#6E3FE7]" },
+                  { c: "Linear", t: "Full-stack Engineer", s: "In review", color: "bg-[#FFF4E5] text-[#B24020]" },
+                  { c: "Vercel", t: "Developer Advocate", s: "Offer", color: "bg-[#E6F4EC] text-success" },
                 ].map((j, i) => (
                   <motion.div
                     key={j.c}
-                    initial={{ opacity: 0, x: 20 }}
+                    initial={{ opacity: 0, x: 16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 + i * 0.12 }}
-                    className="flex items-center justify-between rounded-xl border border-border/40 bg-background/50 p-3"
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className="flex items-center gap-3 rounded-md border border-border bg-background p-3 hover-lift"
                   >
-                    <div>
-                      <p className="font-medium text-sm">{j.c}</p>
+                    <div className="size-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">{j.c[0]}</div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-sm text-foreground">{j.c}</p>
                       <p className="text-xs text-muted-foreground">{j.t}</p>
                     </div>
-                    <span className={`text-xs px-2 py-1 rounded-full ${j.color}`}>{j.s}</span>
+                    <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${j.color}`}>{j.s}</span>
                   </motion.div>
                 ))}
               </div>
@@ -93,7 +91,7 @@ function Landing() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="font-display text-3xl md:text-4xl font-semibold text-center">Everything you need to land the job</h2>
+        <h2 className="font-display text-3xl md:text-4xl font-semibold text-center text-foreground">Everything you need to land the job</h2>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { Icon: Mail, t: "Gmail Sync", d: "Auto-parse application emails and updates." },
@@ -101,9 +99,11 @@ function Landing() {
             { Icon: FileText, t: "Resume Manager", d: "Upload, score, and tag resumes per role." },
             { Icon: LayoutDashboard, t: "Smart Dashboard", d: "Pipeline, stats, and follow-up reminders." },
           ].map(({ Icon, t, d }) => (
-            <div key={t} className="rounded-2xl border border-border/60 bg-card/60 p-6 hover:border-primary/50 transition-colors">
-              <Icon className="size-6 text-primary" />
-              <h3 className="mt-4 font-semibold">{t}</h3>
+            <div key={t} className="rounded-lg border border-border bg-card p-6 shadow-card hover-lift">
+              <div className="size-10 rounded-lg bg-secondary text-primary flex items-center justify-center">
+                <Icon className="size-5" />
+              </div>
+              <h3 className="mt-4 font-semibold text-foreground">{t}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{d}</p>
             </div>
           ))}
@@ -111,35 +111,35 @@ function Landing() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="font-display text-3xl md:text-4xl font-semibold text-center">How it works</h2>
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
+        <h2 className="font-display text-3xl md:text-4xl font-semibold text-center text-foreground">How it works</h2>
+        <div className="mt-12 grid md:grid-cols-3 gap-4">
           {[
             { n: "01", t: "Connect Gmail", d: "One-click sync pulls your application emails." },
             { n: "02", t: "Auto-track", d: "We organize every job into a smart pipeline." },
             { n: "03", t: "Ace Interviews", d: "AI prep tailored to each company." },
           ].map((s) => (
-            <div key={s.n} className="relative rounded-2xl border border-border/60 bg-card/60 p-6">
-              <span className="font-display text-5xl text-primary/40">{s.n}</span>
-              <h3 className="mt-2 font-semibold text-lg">{s.t}</h3>
+            <div key={s.n} className="relative rounded-lg border border-border bg-card p-6 shadow-card">
+              <span className="font-display text-5xl font-semibold text-primary/30">{s.n}</span>
+              <h3 className="mt-2 font-semibold text-lg text-foreground">{s.t}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
-              <CheckCircle2 className="absolute top-6 right-6 size-5 text-primary/60" />
+              <CheckCircle2 className="absolute top-6 right-6 size-5 text-primary" />
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-24 text-center">
-        <div className="rounded-3xl border border-border/60 bg-card/60 p-12 shadow-card">
-          <h2 className="font-display text-3xl md:text-4xl font-semibold">Ready to land your next role?</h2>
+      <section className="mx-auto max-w-3xl px-6 py-20 text-center">
+        <div className="rounded-lg border border-border bg-card p-12 shadow-card">
+          <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground">Ready to land your next role?</h2>
           <p className="mt-3 text-muted-foreground">Join ApplyTrack free. No credit card required.</p>
-          <Link to="/signup" className="mt-6 inline-block"><Button size="lg" className="shadow-glow">Get Started Free <ArrowRight className="size-4" /></Button></Link>
+          <Link to="/signup" className="mt-6 inline-block"><Button size="lg" className="rounded-full font-semibold">Get started free <ArrowRight className="size-4" /></Button></Link>
         </div>
       </section>
 
-      <footer className="border-t border-border/40">
+      <footer className="border-t border-border bg-card">
         <div className="mx-auto max-w-6xl px-6 py-8 flex items-center justify-between text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} ApplyTrack</p>
-          <p>Built with ❤️ for job seekers</p>
+          <p>Built for job seekers</p>
         </div>
       </footer>
     </div>
