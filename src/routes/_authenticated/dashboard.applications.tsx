@@ -14,9 +14,7 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/_authenticated/dashboard/applications")({
   head: () => ({ meta: [{ title: "Applications — ApplyTrack" }] }),
@@ -27,12 +25,21 @@ const STATUSES = ["applied", "in_review", "interview", "offer", "rejected"] as c
 type Status = typeof STATUSES[number];
 
 const STATUS_COLOR: Record<Status, string> = {
-  applied: "bg-primary/15 text-primary border-primary/30",
-  in_review: "bg-warning/15 text-warning border-warning/30",
-  interview: "bg-chart-4/15 text-chart-4 border-chart-4/30",
-  offer: "bg-success/15 text-success border-success/30",
-  rejected: "bg-destructive/15 text-destructive border-destructive/30",
+  applied: "bg-secondary text-primary border-primary/20",
+  in_review: "bg-[#FFF4E5] text-[#B24020] border-[#B24020]/20",
+  interview: "bg-[#F0EAFF] text-[#6E3FE7] border-[#6E3FE7]/20",
+  offer: "bg-[#E6F4EC] text-success border-success/20",
+  rejected: "bg-[#FDEAEB] text-destructive border-destructive/20",
 };
+
+const AVATAR_COLORS = [
+  "bg-[#0A66C2]", "bg-[#057642]", "bg-[#B24020]", "bg-[#6E3FE7]",
+  "bg-[#CC1016]", "bg-[#915EFF]", "bg-[#1F73B7]", "bg-[#8E5A00]",
+];
+function avatarColor(seed: string) {
+  let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+}
 
 function ApplicationsPage() {
   const qc = useQueryClient();
@@ -75,14 +82,16 @@ function ApplicationsPage() {
   });
 
   return (
-    <div className="space-y-6 max-w-7xl">
+    <div className="space-y-6 max-w-5xl mx-auto">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-semibold">Applications</h1>
-          <p className="text-muted-foreground text-sm mt-1">{jobs?.length ?? 0} total</p>
+          <h1 className="text-2xl font-semibold text-foreground">Applications</h1>
+          <p className="text-muted-foreground text-sm mt-0.5">{jobs?.length ?? 0} total</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild><Button><Plus className="size-4" /> Add Job</Button></DialogTrigger>
+          <DialogTrigger asChild>
+            <Button className="rounded-full font-semibold"><Plus className="size-4" /> Add Job</Button>
+          </DialogTrigger>
           <DialogContent>
             <DialogHeader><DialogTitle>Add application</DialogTitle></DialogHeader>
             <form onSubmit={(e) => { e.preventDefault(); create.mutate(form); }} className="space-y-3">
@@ -90,55 +99,45 @@ function ApplicationsPage() {
               <div><Label>Role title</Label><Input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="mt-1" /></div>
               <div><Label>Portal</Label><Input value={form.portal} onChange={(e) => setForm({ ...form, portal: e.target.value })} placeholder="LinkedIn, careers.x.com..." className="mt-1" /></div>
               <div><Label>Location</Label><Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="mt-1" /></div>
-              <DialogFooter><Button type="submit" disabled={create.isPending}>{create.isPending ? "Saving..." : "Save"}</Button></DialogFooter>
+              <DialogFooter><Button type="submit" disabled={create.isPending} className="rounded-full">{create.isPending ? "Saving..." : "Save"}</Button></DialogFooter>
             </form>
           </DialogContent>
         </Dialog>
       </div>
 
-      <div className="rounded-2xl border border-border/60 bg-card overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Company</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Source</TableHead>
-              <TableHead>Applied</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? [...Array(5)].map((_, i) => (
-              <TableRow key={i}><TableCell colSpan={6}><Skeleton className="h-8" /></TableCell></TableRow>
-            )) : (jobs ?? []).length === 0 ? (
-              <TableRow><TableCell colSpan={6} className="text-center text-muted-foreground py-12">No applications yet — add one or sync Gmail.</TableCell></TableRow>
-            ) : (jobs ?? []).map(j => (
-              <TableRow key={j.id}>
-                <TableCell className="font-medium">{j.company}</TableCell>
-                <TableCell>{j.title}</TableCell>
-                <TableCell>
-                  <Select value={j.status} onValueChange={(v) => update.mutate({ id: j.id, status: v as Status })}>
-                    <SelectTrigger className={`w-[130px] text-xs border ${STATUS_COLOR[j.status as Status]}`}><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {STATUSES.map(s => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </TableCell>
-                <TableCell><Badge variant="outline" className="text-xs">{j.source}</Badge></TableCell>
-                <TableCell className="text-sm text-muted-foreground">{new Date(j.applied_date).toLocaleDateString()}</TableCell>
-                <TableCell className="text-right">
-                  <div className="flex gap-1 justify-end">
-                    <Link to="/dashboard/interview/$jobId" params={{ jobId: j.id }}>
-                      <Button size="icon" variant="ghost" title="AI Interview prep"><Sparkles className="size-4" /></Button>
-                    </Link>
-                    <Button size="icon" variant="ghost" onClick={() => del.mutate(j.id)}><Trash2 className="size-4" /></Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+      <div className="bg-card rounded-lg border border-border shadow-card overflow-hidden">
+        {isLoading ? (
+          <div className="p-4 space-y-3">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
+        ) : (jobs ?? []).length === 0 ? (
+          <p className="text-center text-muted-foreground py-16 text-sm">No applications yet — add one or sync Gmail.</p>
+        ) : (
+          <ul className="divide-y divide-border">
+            {(jobs ?? []).map(j => (
+              <li key={j.id} className="flex items-center gap-4 p-4 hover:bg-secondary/60 transition-colors">
+                <div className={`size-12 rounded-full ${avatarColor(j.company)} text-white flex items-center justify-center font-semibold text-base shrink-0`}>
+                  {j.company.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-foreground truncate">{j.company}</p>
+                  <p className="text-sm text-muted-foreground truncate">{j.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{j.source} · Applied {new Date(j.applied_date).toLocaleDateString()}</p>
+                </div>
+                <Select value={j.status} onValueChange={(v) => update.mutate({ id: j.id, status: v as Status })}>
+                  <SelectTrigger className={`w-[120px] text-xs h-7 rounded-full border font-medium ${STATUS_COLOR[j.status as Status]}`}><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {STATUSES.map(s => <SelectItem key={s} value={s}>{s.replace("_", " ")}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <div className="flex gap-1">
+                  <Link to="/dashboard/interview/$jobId" params={{ jobId: j.id }}>
+                    <Button size="icon" variant="ghost" title="AI Interview prep" className="rounded-full text-primary"><Sparkles className="size-4" /></Button>
+                  </Link>
+                  <Button size="icon" variant="ghost" onClick={() => del.mutate(j.id)} className="rounded-full text-muted-foreground hover:text-destructive"><Trash2 className="size-4" /></Button>
+                </div>
+              </li>
             ))}
-          </TableBody>
-        </Table>
+          </ul>
+        )}
       </div>
     </div>
   );
