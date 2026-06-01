@@ -9,8 +9,13 @@ export function AuthShell({ title, subtitle, children, footer }: {
       <div className="absolute inset-0 gradient-hero pointer-events-none" />
       <div className="relative w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 justify-center mb-6">
-          <div className="size-9 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-bold">in</div>
-          <span className="text-2xl font-semibold text-foreground">ApplyTrack</span>
+          <div
+            className="size-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-extrabold tracking-tight"
+            style={{ fontFamily: "'Sora', sans-serif" }}
+          >
+            AT
+          </div>
+          <span className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Sora', sans-serif" }}>ApplyTrack</span>
         </Link>
         <div className="rounded-lg border border-border bg-card p-8 shadow-card">
           <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
