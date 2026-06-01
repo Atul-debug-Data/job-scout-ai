@@ -83,8 +83,11 @@ export function AppSidebar() {
           </div>
         ) : (
           <Link to="/dashboard" className="flex items-center justify-center py-3">
-            <div className="size-8 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
-              in
+            <div
+              className="size-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-extrabold text-sm tracking-tight"
+              style={{ fontFamily: "'Sora', sans-serif" }}
+            >
+              AT
             </div>
           </Link>
         )}
