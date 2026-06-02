@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, redirect, Link } from "@tanstack/react-router";
-import { Bell, Search, Menu } from "lucide-react";
+import { Bell, Search, Menu, Briefcase } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -23,18 +23,13 @@ function TopNav() {
   return (
     <header className="h-14 sticky top-0 z-30 bg-card border-b border-border shadow-card">
       <div className="h-full flex items-center gap-2 px-3 md:px-4">
-        <SidebarTrigger className="md:hidden size-9 shrink-0">
+        <SidebarTrigger className="md:hidden size-9 shrink-0" aria-label="Open menu">
           <Menu className="size-5" />
         </SidebarTrigger>
         <Link to="/dashboard" className="flex items-center gap-2 shrink-0">
-          <div
-            className="size-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-extrabold text-sm tracking-tight"
-            style={{ fontFamily: "'Sora', sans-serif" }}
-          >
-            AT
-          </div>
+          <Briefcase className="size-6 text-primary" strokeWidth={2.5} />
           <span
-            className="font-bold text-foreground hidden sm:inline text-base"
+            className="font-bold text-foreground text-base"
             style={{ fontFamily: "'Sora', sans-serif" }}
           >
             ApplyTrack
