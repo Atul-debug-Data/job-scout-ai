@@ -31,7 +31,7 @@ function ResumesPage() {
   const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (!label.trim()) { toast.error("Add a label first"); return; }
+    const finalLabel = label.trim() || file.name.replace(/\.[^/.]+$/, "");
     setUploading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -39,7 +39,7 @@ function ResumesPage() {
       const path = `${user.id}/${Date.now()}-${file.name}`;
       const { error } = await supabase.storage.from("resumes").upload(path, file);
       if (error) throw error;
-      await createFn({ data: { file_path: path, label } });
+      await createFn({ data: { file_path: path, label: finalLabel } });
       qc.invalidateQueries({ queryKey: ["resumes"] });
       toast.success("Resume uploaded");
       setLabel("");
@@ -48,6 +48,7 @@ function ResumesPage() {
       toast.error(err instanceof Error ? err.message : "Upload failed");
     } finally { setUploading(false); }
   };
+
 
   const del = useMutation({
     mutationFn: (id: string) => deleteFn({ data: { id } }),
@@ -75,8 +76,9 @@ function ResumesPage() {
         <p className="text-sm text-muted-foreground mt-1">PDF, DOC, or DOCX</p>
         <div className="mt-4 max-w-md mx-auto space-y-3 text-left">
           <div>
-            <Label className="text-xs">Label</Label>
+            <Label className="text-xs">Label <span className="text-muted-foreground font-normal">(optional — defaults to filename)</span></Label>
             <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Senior FE Resume v3" className="mt-1 bg-background" />
+
           </div>
           <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" onChange={onUpload} className="hidden" id="resume-file" />
           <Button onClick={() => fileRef.current?.click()} disabled={uploading} className="rounded-full w-full font-semibold">
