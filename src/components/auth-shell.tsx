@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
+import { Briefcase } from "lucide-react";
 
 export function AuthShell({ title, subtitle, children, footer }: {
   title: string; subtitle?: string; children: ReactNode; footer?: ReactNode;
@@ -9,12 +10,7 @@ export function AuthShell({ title, subtitle, children, footer }: {
       <div className="absolute inset-0 gradient-hero pointer-events-none" />
       <div className="relative w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 justify-center mb-6">
-          <div
-            className="size-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-extrabold tracking-tight"
-            style={{ fontFamily: "'Sora', sans-serif" }}
-          >
-            AT
-          </div>
+          <Briefcase className="size-8 text-primary" strokeWidth={2.5} />
           <span className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Sora', sans-serif" }}>ApplyTrack</span>
         </Link>
         <div className="rounded-lg border border-border bg-card p-8 shadow-card">
