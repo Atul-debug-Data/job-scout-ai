@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   LayoutDashboard, Briefcase, Mail, Mic, FileText, Settings, LogOut,
-  Shield, Users, ScrollText, Flag,
+  Shield, Users, ScrollText, Flag, Kanban,
 } from "lucide-react";
 import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
@@ -16,6 +16,7 @@ import { checkIsAdmin } from "@/lib/admin.functions";
 const mainItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Applications", url: "/dashboard/applications", icon: Briefcase },
+  { title: "Pipeline", url: "/pipeline", icon: Kanban },
   { title: "Gmail Sync", url: "/dashboard/gmail", icon: Mail },
   { title: "Interview Prep", url: "/dashboard/interview", icon: Mic },
   { title: "Resumes", url: "/dashboard/resumes", icon: FileText },
@@ -37,7 +38,7 @@ function initials(email: string) {
 }
 
 export function AppSidebar() {
-  const { state } = useSidebar();
+  const { state, setOpenMobile } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [email, setEmail] = useState<string>("");
@@ -52,10 +53,10 @@ export function AppSidebar() {
     supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
   }, []);
 
-  const isActive = (url: string) =>
-    url === "/dashboard" || url === "/admin"
-      ? pathname === url
-      : pathname.startsWith(url);
+  const isActive = (url: string) => {
+    if (url === "/dashboard" || url === "/admin" || url === "/pipeline") return pathname === url;
+    return pathname.startsWith(url);
+  };
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -63,6 +64,7 @@ export function AppSidebar() {
   };
 
   const displayName = email ? email.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : "Guest";
+  const closeMobile = () => setOpenMobile(false);
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
@@ -76,19 +78,14 @@ export function AppSidebar() {
               </div>
               <p className="mt-2 font-semibold text-foreground truncate">{displayName}</p>
               <p className="text-xs text-muted-foreground truncate">{email}</p>
-              <Link to="/dashboard/settings" className="text-xs font-semibold text-primary hover:underline mt-1 inline-block">
+              <Link to="/dashboard/settings" onClick={closeMobile} className="text-xs font-semibold text-primary hover:underline mt-1 inline-block">
                 View profile
               </Link>
             </div>
           </div>
         ) : (
           <Link to="/dashboard" className="flex items-center justify-center py-3">
-            <div
-              className="size-9 rounded-lg bg-primary text-primary-foreground flex items-center justify-center font-extrabold text-sm tracking-tight"
-              style={{ fontFamily: "'Sora', sans-serif" }}
-            >
-              AT
-            </div>
+            <Briefcase className="size-6 text-primary" strokeWidth={2.5} />
           </Link>
         )}
       </SidebarHeader>
@@ -107,7 +104,7 @@ export function AppSidebar() {
                       isActive={active}
                       className={`relative rounded-none h-10 ${active ? "!bg-accent !text-primary font-semibold" : "hover:bg-muted text-foreground"}`}
                     >
-                      <Link to={item.url} className="flex items-center gap-3 pl-4">
+                      <Link to={item.url} onClick={closeMobile} className="flex items-center gap-3 pl-4">
                         {active && <span className="absolute left-0 top-0 h-full w-1 bg-primary" />}
                         <item.icon className="size-5 shrink-0" />
                         {!collapsed && <span className="text-sm">{item.title}</span>}
@@ -134,7 +131,7 @@ export function AppSidebar() {
                         isActive={active}
                         className={`relative rounded-none h-10 ${active ? "!bg-accent !text-primary font-semibold" : "hover:bg-muted text-foreground"}`}
                       >
-                        <Link to={item.url} className="flex items-center gap-3 pl-4">
+                        <Link to={item.url} onClick={closeMobile} className="flex items-center gap-3 pl-4">
                           {active && <span className="absolute left-0 top-0 h-full w-1 bg-primary" />}
                           <item.icon className="size-5 shrink-0" />
                           {!collapsed && <span className="text-sm">{item.title}</span>}
