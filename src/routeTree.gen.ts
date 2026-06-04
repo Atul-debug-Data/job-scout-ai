@@ -21,7 +21,6 @@ import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
 import { Route as AuthenticatedDashboardResumesRouteImport } from './routes/_authenticated/dashboard.resumes'
-import { Route as AuthenticatedDashboardGmailRouteImport } from './routes/_authenticated/dashboard.gmail'
 import { Route as AuthenticatedDashboardApplicationsRouteImport } from './routes/_authenticated/dashboard.applications'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authenticated/admin.logs'
@@ -91,12 +90,6 @@ const AuthenticatedDashboardResumesRoute =
     path: '/dashboard/resumes',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedDashboardGmailRoute =
-  AuthenticatedDashboardGmailRouteImport.update({
-    id: '/dashboard/gmail',
-    path: '/dashboard/gmail',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedDashboardApplicationsRoute =
   AuthenticatedDashboardApplicationsRouteImport.update({
     id: '/dashboard/applications',
@@ -143,7 +136,6 @@ export interface FileRoutesByFullPath {
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
-  '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -162,7 +154,6 @@ export interface FileRoutesByTo {
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
-  '/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -184,7 +175,6 @@ export interface FileRoutesById {
   '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/dashboard/applications': typeof AuthenticatedDashboardApplicationsRoute
-  '/_authenticated/dashboard/gmail': typeof AuthenticatedDashboardGmailRoute
   '/_authenticated/dashboard/resumes': typeof AuthenticatedDashboardResumesRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -206,7 +196,6 @@ export interface FileRouteTypes {
     | '/admin/logs'
     | '/admin/users'
     | '/dashboard/applications'
-    | '/dashboard/gmail'
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin/'
@@ -225,7 +214,6 @@ export interface FileRouteTypes {
     | '/admin/logs'
     | '/admin/users'
     | '/dashboard/applications'
-    | '/dashboard/gmail'
     | '/dashboard/resumes'
     | '/dashboard/settings'
     | '/admin'
@@ -246,7 +234,6 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/logs'
     | '/_authenticated/admin/users'
     | '/_authenticated/dashboard/applications'
-    | '/_authenticated/dashboard/gmail'
     | '/_authenticated/dashboard/resumes'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/admin/'
@@ -350,13 +337,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardResumesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/dashboard/gmail': {
-      id: '/_authenticated/dashboard/gmail'
-      path: '/dashboard/gmail'
-      fullPath: '/dashboard/gmail'
-      preLoaderRoute: typeof AuthenticatedDashboardGmailRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/dashboard/applications': {
       id: '/_authenticated/dashboard/applications'
       path: '/dashboard/applications'
@@ -423,7 +403,6 @@ interface AuthenticatedRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedPipelineRoute: typeof AuthenticatedPipelineRoute
   AuthenticatedDashboardApplicationsRoute: typeof AuthenticatedDashboardApplicationsRoute
-  AuthenticatedDashboardGmailRoute: typeof AuthenticatedDashboardGmailRoute
   AuthenticatedDashboardResumesRoute: typeof AuthenticatedDashboardResumesRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
@@ -436,7 +415,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedPipelineRoute: AuthenticatedPipelineRoute,
   AuthenticatedDashboardApplicationsRoute:
     AuthenticatedDashboardApplicationsRoute,
-  AuthenticatedDashboardGmailRoute: AuthenticatedDashboardGmailRoute,
   AuthenticatedDashboardResumesRoute: AuthenticatedDashboardResumesRoute,
   AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
