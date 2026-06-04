@@ -4,7 +4,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "ApplyTrack — Never Lose Track of a Job Again" },
-      { name: "description", content: "ApplyTrack syncs with your Gmail to auto-track every job application — interviews, rejections, offers — all in one place." },
+      { name: "description", content: "ApplyTrack helps you organize every job application — interviews, rejections, offers — all in one place." },
     ],
   }),
   component: LandingPage,
@@ -90,7 +90,7 @@ function LandingPage() {
               <span style={{ color: BLUE }}>Never miss</span> a follow-up.
             </h1>
             <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.6, marginBottom: 32 }}>
-              ApplyTrack syncs with your Gmail to automatically track every application — interviews, rejections, offers — all in one place. Built for India's job seekers.
+              Organize every application in one place — track statuses, prep for interviews, and manage resumes. Built for India's job seekers.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <Link to="/signup" className="at-btn-hero" style={{ padding: "14px 28px", background: BLUE, color: "#fff", borderRadius: 28, fontSize: 15, fontWeight: 600, textDecoration: "none", ...dm }}>Get Started Free →</Link>
@@ -121,7 +121,7 @@ function LandingPage() {
                 </div>
                 <div style={{ display: "flex", height: 300 }}>
                   <div style={{ width: 140, background: "#fff", borderRight: `1px solid ${BORDER}`, padding: "16px 0", flexShrink: 0 }}>
-                    {["Dashboard", "Applications", "Pipeline", "Gmail Sync", "Interview", "Resumes", "Settings"].map((n, i) => (
+                    {["Dashboard", "Applications", "Pipeline", "Interview", "Resumes", "Settings"].map((n, i) => (
                       <div key={n} style={{ padding: "8px 16px", fontSize: 11, color: i === 0 ? BLUE : MUTED, display: "flex", alignItems: "center", gap: 8, background: i === 0 ? BLUE_LIGHT : "transparent", borderLeft: i === 0 ? `3px solid ${BLUE}` : "3px solid transparent", fontWeight: i === 0 ? 600 : 400 }}>
                         <div style={{ width: 6, height: 6, borderRadius: "50%", background: "currentColor", flexShrink: 0 }} />
                         {n}
@@ -152,7 +152,7 @@ function LandingPage() {
               </div>
             </div>
             <div className="at-badge-2" style={{ position: "absolute", bottom: 20, left: -30, background: "#fff", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 24px rgba(0,0,0,.12)", fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 8, border: `1px solid ${BORDER}`, color: BLUE, zIndex: 2 }}>
-              <span style={{ fontSize: 16 }}>📧</span> Gmail synced · 10 emails
+              <span style={{ fontSize: 16 }}>🎉</span> Offer from Stripe
             </div>
           </div>
         </div>
@@ -179,12 +179,12 @@ function LandingPage() {
         <p style={{ fontSize: 16, color: MUTED, maxWidth: 500, lineHeight: 1.6, marginBottom: 48 }}>Stop juggling spreadsheets. ApplyTrack brings all your applications together automatically.</p>
         <div className="at-features" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
           {[
-            ["📧", "Gmail Auto-Sync", "Connect your Gmail once. We automatically detect and parse every job-related email — interviews, rejections, offers."],
             ["📊", "Visual Pipeline", "See every application in a Kanban board. Applied → In Review → Interview → Offer. Know exactly where you stand."],
             ["🤖", "AI Interview Prep", "Get 10 tailored interview questions for every company and role. Practice answers and get instant AI feedback."],
             ["📄", "Resume Manager", "Upload your resume and get an AI score with improvement tips. Track which resume was used for which job."],
             ["🔔", "Smart Reminders", "Never miss a follow-up. Get notified when it's time to follow up or when an interview is coming up."],
             ["📈", "Application Analytics", "See your response rates, interview conversion, and which portals work best for your profile."],
+            ["🎯", "Stay Organized", "All your job applications in one place. No more spreadsheets or lost email threads."],
           ].map(([icon, title, desc]) => (
             <div key={title} className="at-feature" style={{ background: "#fff", borderRadius: 12, padding: 28, border: `1px solid ${BORDER}`, boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}>
               <div style={{ width: 44, height: 44, borderRadius: 10, background: BLUE_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, marginBottom: 16 }}>{icon}</div>
@@ -205,7 +205,7 @@ function LandingPage() {
             <div className="at-steps-line" style={{ content: '""', position: "absolute", top: 28, left: "15%", right: "15%", height: 2, background: `linear-gradient(90deg, ${BLUE_LIGHT}, ${BLUE}, ${BLUE_LIGHT})`, zIndex: 0 }} />
             {[
               ["1", "Sign up free", "Create your account with email or Google. Takes less than 30 seconds."],
-              ["2", "Connect Gmail", "One-click Gmail sync. We read job emails and auto-populate your dashboard."],
+              ["2", "Add your applications", "Manually add jobs or import them. Organize by status and company."],
               ["3", "Track & prepare", "See all your applications, prep for interviews, and never miss a follow-up."],
             ].map(([n, t, d]) => (
               <div key={n} style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
