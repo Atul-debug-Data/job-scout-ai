@@ -109,7 +109,7 @@ function ApplicationsPage() {
         {isLoading ? (
           <div className="p-4 space-y-3">{[...Array(5)].map((_, i) => <Skeleton key={i} className="h-16" />)}</div>
         ) : (jobs ?? []).length === 0 ? (
-          <p className="text-center text-muted-foreground py-16 text-sm">No applications yet — add one or sync Gmail.</p>
+          <p className="text-center text-muted-foreground py-16 text-sm">No applications yet — add one to get started.</p>
         ) : (
           <ul className="divide-y divide-border">
             {(jobs ?? []).map(j => (

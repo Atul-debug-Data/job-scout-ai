@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
-  LayoutDashboard, Briefcase, Mail, Mic, FileText, Settings, LogOut,
+  LayoutDashboard, Briefcase, Mic, FileText, Settings, LogOut,
   Shield, Users, ScrollText, Flag, Kanban,
 } from "lucide-react";
 import {
@@ -17,7 +17,6 @@ const mainItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Applications", url: "/dashboard/applications", icon: Briefcase },
   { title: "Pipeline", url: "/pipeline", icon: Kanban },
-  { title: "Gmail Sync", url: "/dashboard/gmail", icon: Mail },
   { title: "Interview Prep", url: "/dashboard/interview", icon: Mic },
   { title: "Resumes", url: "/dashboard/resumes", icon: FileText },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
