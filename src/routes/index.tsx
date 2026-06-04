@@ -200,7 +200,7 @@ function LandingPage() {
         <section style={{ maxWidth: 1100, margin: "0 auto", padding: "64px 24px" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: BLUE, textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: 12, textAlign: "center" }}>How it works</div>
           <h2 className="at-h2" style={{ ...sora, fontSize: 32, fontWeight: 800, color: TEXT, marginBottom: 12, letterSpacing: "-.5px", lineHeight: 1.2, textAlign: "center" }}>Up and running in 3 steps</h2>
-          <p style={{ fontSize: 16, color: MUTED, maxWidth: 500, lineHeight: 1.6, margin: "0 auto 48px", textAlign: "center" }}>No complicated setup. Just sign up, connect Gmail, and start tracking.</p>
+          <p style={{ fontSize: 16, color: MUTED, maxWidth: 500, lineHeight: 1.6, margin: "0 auto 48px", textAlign: "center" }}>No complicated setup. Just sign up, add your applications, and start tracking.</p>
           <div className="at-steps" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 40, position: "relative" }}>
             <div className="at-steps-line" style={{ content: '""', position: "absolute", top: 28, left: "15%", right: "15%", height: 2, background: `linear-gradient(90deg, ${BLUE_LIGHT}, ${BLUE}, ${BLUE_LIGHT})`, zIndex: 0 }} />
             {[
