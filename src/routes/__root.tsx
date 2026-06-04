@@ -57,7 +57,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "ApplyTrack — Track every job. Never miss a follow-up." },
-      { name: "description", content: "Smart job application tracker with Gmail sync and AI interview prep." },
+      { name: "description", content: "Smart job application tracker with AI interview prep and resume scoring." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
