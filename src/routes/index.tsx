@@ -109,7 +109,7 @@ function LandingPage() {
           {/* Dashboard mock */}
           <div className="at-hero-visual" style={{ position: "relative" }}>
             <div className="at-badge-1" style={{ position: "absolute", top: -20, right: -20, background: "#fff", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 24px rgba(0,0,0,.12)", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 8, border: `1px solid ${BORDER}`, color: GREEN, zIndex: 2 }}>
-              <span style={{ fontSize: 16 }}>🎉</span> Offer from Vercel!
+              <span style={{ fontSize: 16 }}>✉️</span> Gmail synced
             </div>
             <div className="at-dash-wrap">
               <div className="at-dash" style={{ background: "#fff", borderRadius: 16, boxShadow: "0 20px 60px rgba(0,0,0,.12)", overflow: "hidden", border: `1px solid ${BORDER}` }}>
