@@ -109,7 +109,7 @@ function LandingPage() {
           {/* Dashboard mock */}
           <div className="at-hero-visual" style={{ position: "relative" }}>
             <div className="at-badge-1" style={{ position: "absolute", top: -20, right: -20, background: "#fff", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 24px rgba(0,0,0,.12)", fontSize: 12, fontWeight: 600, display: "flex", alignItems: "center", gap: 8, border: `1px solid ${BORDER}`, color: GREEN, zIndex: 2 }}>
-              <span style={{ fontSize: 16 }}>🎉</span> Offer from Vercel!
+              <span style={{ fontSize: 16 }}>✉️</span> Gmail synced
             </div>
             <div className="at-dash-wrap">
               <div className="at-dash" style={{ background: "#fff", borderRadius: 16, boxShadow: "0 20px 60px rgba(0,0,0,.12)", overflow: "hidden", border: `1px solid ${BORDER}` }}>
@@ -131,7 +131,7 @@ function LandingPage() {
                   <div style={{ flex: 1, padding: 16, background: BG, overflow: "hidden" }}>
                     <div style={{ ...sora, fontSize: 13, fontWeight: 700, color: TEXT, marginBottom: 12 }}>Your job search at a glance</div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
-                      {[["Applied", "12", BLUE], ["Interview", "4", "#9333EA"], ["Offer", "1", GREEN], ["Rejected", "2", "#CC1016"]].map(([l, n, c]) => (
+                      {[["Applied", "0", BLUE], ["Interview", "0", "#9333EA"], ["Offer", "0", GREEN], ["Rejected", "0", "#CC1016"]].map(([l, n, c]) => (
                         <div key={l} style={{ background: "#fff", borderRadius: 8, padding: 10, border: `1px solid ${BORDER}` }}>
                           <div style={{ fontSize: 9, color: MUTED, marginBottom: 4, textTransform: "uppercase", letterSpacing: ".5px" }}>{l}</div>
                           <div style={{ ...sora, fontSize: 20, fontWeight: 800, color: c }}>{n}</div>
@@ -140,19 +140,16 @@ function LandingPage() {
                     </div>
                     <div style={{ background: "#fff", borderRadius: 8, padding: 10, border: `1px solid ${BORDER}` }}>
                       <div style={{ fontSize: 9, fontWeight: 600, color: TEXT, marginBottom: 8 }}>Recent Activity</div>
-                      {[["Offer letter — Vercel", GREEN], ["Interview — Shopify", BLUE], ["Applied — Airbnb", "#9333EA"]].map(([t, c]) => (
-                        <div key={t} style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 0", borderBottom: "1px solid #f0f0f0" }}>
-                          <div style={{ width: 6, height: 6, borderRadius: "50%", background: c, flexShrink: 0 }} />
-                          <div style={{ fontSize: 9, color: MUTED }}>{t}</div>
-                        </div>
-                      ))}
+                      <div style={{ fontSize: 9, color: MUTED, padding: "8px 0", textAlign: "center" }}>
+                        Connect Gmail to auto-sync your applications
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div className="at-badge-2" style={{ position: "absolute", bottom: 20, left: -30, background: "#fff", borderRadius: 12, padding: "10px 14px", boxShadow: "0 8px 24px rgba(0,0,0,.12)", fontSize: 11, fontWeight: 600, display: "flex", alignItems: "center", gap: 8, border: `1px solid ${BORDER}`, color: BLUE, zIndex: 2 }}>
-              <span style={{ fontSize: 16 }}>🎉</span> Offer from Stripe
+              <span style={{ fontSize: 16 }}>🔗</span> Auto-tracked
             </div>
           </div>
         </div>
