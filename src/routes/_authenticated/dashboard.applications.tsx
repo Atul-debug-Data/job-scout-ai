@@ -118,9 +118,9 @@ function ApplicationsPage() {
                   {j.company.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-foreground truncate">{j.company}</p>
-                  <p className="text-sm text-muted-foreground truncate">{j.title}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{j.source} · Applied {new Date(j.applied_date).toLocaleDateString()}</p>
+                  <p className="font-semibold text-foreground break-words">{j.company}</p>
+                  <p className="text-sm text-muted-foreground break-words">{j.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5 break-words">{j.source} · Applied {new Date(j.applied_date).toLocaleDateString()}</p>
                 </div>
                 <Select value={j.status} onValueChange={(v) => update.mutate({ id: j.id, status: v as Status })}>
                   <SelectTrigger className={`w-[120px] text-xs h-7 rounded-full border font-medium ${STATUS_COLOR[j.status as Status]}`}><SelectValue /></SelectTrigger>
