@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 
 export const Route = createFileRoute("/signup")({
+  ssr: false,
   head: () => ({ meta: [{ title: "Sign up — ApplyTrack" }] }),
   component: SignupPage,
 });
