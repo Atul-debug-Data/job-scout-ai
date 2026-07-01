@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
 });
 
-type Notif = { id: string; action: string; created_at: string; metadata: any };
+type Notif = { id: string; action: string; created_at: string; metadata: unknown };
 
 function TopNav() {
   const navigate = useNavigate();
