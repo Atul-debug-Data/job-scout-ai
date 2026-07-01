@@ -96,11 +96,10 @@ function LandingPage() {
               <Link to="/signup" className="at-btn-hero" style={{ padding: "14px 28px", background: BLUE, color: "#fff", borderRadius: 28, fontSize: 15, fontWeight: 600, textDecoration: "none", ...dm }}>Get Started Free →</Link>
               <a href="#how" className="at-btn-outline" style={{ padding: "14px 28px", background: "transparent", color: TEXT, border: `1.5px solid ${BORDER}`, borderRadius: 28, fontSize: 15, fontWeight: 500, textDecoration: "none", ...dm }}>See how it works</a>
             </div>
-            <div style={{ display: "flex", gap: 28, marginTop: 36, paddingTop: 28, borderTop: `1px solid ${BORDER}` }}>
-              {[["10K+", "Jobs tracked"], ["3 portals", "Auto-synced"], ["Free", "To get started"]].map(([n, l]) => (
-                <div key={l}>
-                  <div style={{ ...sora, fontSize: 22, fontWeight: 800, color: TEXT }}>{n}</div>
-                  <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>{l}</div>
+            <div style={{ display: "flex", gap: 20, marginTop: 36, paddingTop: 28, borderTop: `1px solid ${BORDER}`, flexWrap: "wrap" }}>
+              {["Application Tracking", "Interview Prep", "Resume Management", "Gmail Sync (Coming Soon)"].map((l) => (
+                <div key={l} style={{ fontSize: 13, color: MUTED, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ color: GREEN, fontWeight: 700 }}>✓</span> {l}
                 </div>
               ))}
             </div>
