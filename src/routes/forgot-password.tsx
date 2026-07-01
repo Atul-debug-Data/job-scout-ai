@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/forgot-password")({
+  ssr: false,
   head: () => ({ meta: [{ title: "Reset password — ApplyTrack" }] }),
   component: ForgotPage,
 });
